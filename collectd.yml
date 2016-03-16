@@ -1,0 +1,45 @@
+---
+- hosts: ymservers
+  vars:
+     user: zhangjinjie
+  remote_user: "{{ user }}"
+  gather_facts: no
+
+  tasks:
+  - name: copy local collectd file to remote locations.
+    copy: src=/home/zhangjinjie/collectd-5.5.0.tar.bz2 dest=/home/zhangjinjie
+
+  - name: extract files.
+    shell: tar xf collectd-5.5.0.tar.bz2
+    args:
+      removes: collectd-5.5.0.tar.bz2
+      creates: collectd-5.5.0
+
+  - name: generate makefile
+    shell: ./configure --with-perl-bindings=no --disable-turbostat  # turbostat用于读取cpu主频等信息, 在40-42机器上会出错, 需要disable
+    args:
+      chdir: collectd-5.5.0
+      creates: Makefile
+
+  - name: make
+    shell: make
+    args:
+      chdir: collectd-5.5.0
+      creates: src/daemon/collectd
+
+  - name: install collectd
+    shell: make install
+    become: yes
+    args:
+      chdir: collectd-5.5.0 
+      creates: /opt/collectd/sbin/collectd
+
+  - name: change user
+    shell: chown -R {{ user }}:{{ user }} /opt/collectd
+    become: yes
+
+  - name: prepare configuration file
+    template: src=collectd.conf.j2 dest=/opt/collectd/etc/collectd.conf
+
+  - name: restart collectd
+    script: restart_collectd
