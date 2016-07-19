@@ -14,7 +14,7 @@
 
 - name: add user zhangjinjie
   become: yes
-  user: name={{ item }} state=present groups=developer
+  user: name={{ item }} state=present groups=developer password={{ my_password }} update_password=always generate_ssh_key=yes
   with_items:
     - zhangjinjie
 
