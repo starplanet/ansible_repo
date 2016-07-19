@@ -43,7 +43,7 @@
 # db-[99:101]-node.example.com
 [ymservers]
 ym34 ansible_ssh_host=172.16.24.9 ansible_ssh_port=22051
-# ym35 ansible_ssh_host=172.16.24.6 ansible_ssh_port=65322
+ym35 ansible_ssh_host=172.16.24.6 ansible_ssh_port=65322
 ym36 ansible_ssh_host=172.16.24.1 ansible_ssh_port=65322
 ym37 ansible_ssh_host=172.16.24.5 ansible_ssh_port=65322
 ym38 ansible_ssh_host=172.16.24.199 ansible_ssh_port=22051
@@ -69,6 +69,3 @@ ym91 ansible_ssh_host=172.16.24.91
 ym92 ansible_ssh_host=172.16.24.92
 ym93 ansible_ssh_host=172.16.24.93
 ym94 ansible_ssh_host=172.16.24.94
-
-[ymservers:vars]
-ansible_ssh_user=zhangjinjie

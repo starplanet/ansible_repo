@@ -1,0 +1,5 @@
+---
+
+- hosts: ymservers
+  roles: 
+    - common

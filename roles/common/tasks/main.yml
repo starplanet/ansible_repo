@@ -1,0 +1,43 @@
+---
+# This playbook runs all the common plays in the deployment
+
+- name: install neccessary packages like net-tools, vim
+  yum: name={{ item }} state=installed
+  become: yes
+  with_items:
+    - net-tools
+    - vim
+
+- name: add group developer
+  group: name=developer state=present
+  become: yes
+
+- name: add user zhangjinjie
+  become: yes
+  user: name={{ item }} state=present groups=developer
+  with_items:
+    - zhangjinjie
+
+- name: modify /etc/sudoers to add all privileges to developer group
+  become: yes
+  lineinfile: dest=/etc/sudoers state=present regexp='^%developer' line='%developer ALL=(ALL) ALL'
+
+- name: modify /etc/ssh/sshd_config to add zhangjinjie to AllowUsers section
+  become: yes
+  lineinfile:
+    dest: /etc/ssh/sshd_config
+    state: present
+    regexp: '^(AllowUsers(?!.*\b{{ item }}\b).*)$'
+    line: '\1 {{ item }}'
+    backrefs: yes
+  with_items:
+    - zhangjinjie
+  notify: restart sshd
+
+- name: ensure ~/.pip directory exists
+  become: yes
+  file: path=/home/zhangjinjie/.pip state=directory mode=0755 owner=zhangjinjie group=zhangjinjie
+
+- name: new ~/.pip/pip.conf to add aliyum mirror to pip
+  become: yes
+  copy: src=pip.conf dest=/home/zhangjinjie/.pip/pip.conf owner=zhangjinjie mode=664 group=zhangjinjie
