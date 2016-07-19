@@ -1,0 +1,20 @@
+tasks:
+
+1. packages to installed
+
+  1. net-tools, contain route, ifconfig commands
+  2. vim
+
+2. add user: zhangjinjie, add group developer
+
+3. modify /etc/sudoers to add all privileges to developer group.
+
+4. modify /etc/ssh/sshd_config to add zhangjinjie to AllowUsers section.
+
+5. restart sshd. systemctl restart sshd.service in centos 7.
+
+6. new ~/.pip/pip.conf to add aliyun mirror to pip
+
+7. change hostname. modify /etc/sysconfig/network and run hostname command.
+
+8. add ~/.oh-my-zsh/custom/robby-rushell.zsh-theme custom options.
