@@ -1,0 +1,4 @@
+---
+# zabbix version
+zabbix_common_config_minor_version: '3.0'
+zabbix_common_environment: {}

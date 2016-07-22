@@ -1,0 +1,29 @@
+---
+
+- name: copy /etc/hosts to configure dns
+  copy: src=hosts dest=/etc/hosts owner=root group=root mode=644
+
+- name: set vm.swappiness=10 in /etc/sysctl.conf
+  sysctl: name=vm.swappiness value=10 state=present
+
+- name: make sure /etc/rc.local will run at boot
+  file: path=/etc/rc.local mode=755 follow=yes
+
+- name: set hugepage never in /etc/rc.local
+  blockinfile:
+    dest: /etc/rc.local
+    marker: '# {mark} set hugepage never block'
+    follow: yes
+    block: |
+      if test -f /sys/kernel/mm/transparent_hugepage/enabled; then
+         echo never > /sys/kernel/mm/transparent_hugepage/enabled
+      fi
+      if test -f /sys/kernel/mm/transparent_hugepage/defrag; then
+        echo never > /sys/kernel/mm/transparent_hugepage/defrag
+      fi
+
+- name: make /usr/share/java directory exists
+  file: path=/usr/share/java state=directory mode=755
+
+- name: install mysql-connector-java
+  copy: src=mysql-connector-java-5.1.39-bin.jar dest=/usr/share/java/mysql-connector-java.jar

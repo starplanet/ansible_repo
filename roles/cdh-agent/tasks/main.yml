@@ -1,0 +1,21 @@
+---
+
+- name: configure custom yum repo
+  copy: src=cdh.repo dest=/etc/yum.repos.d/cdh.repo
+
+- name: install oracle-j2sdk1.7
+  yum: name=oracle-j2sdk1.7 state=installed
+
+- name: install cloudera-manager-agent
+  yum: name=cloudera-manager-agent state=installed
+
+- name: set host variable host_ip
+  set_fact: host_ip='{{ item }}'
+  with_items: '{{ ansible_all_ipv4_addresses }}'
+  when: "item.startswith('172.16.24')"
+
+- debug: var='{{ host_ip }}'
+
+- name: copy /etc/cloudera-scm-agent/config.ini
+  template: src=config.ini.j2 dest=/etc/cloudera-scm-agent/config.ini force=yes backup=yes
+  notify: restart cloudera-scm-agent

@@ -1,0 +1,23 @@
+---
+galaxy_info:
+  author: René Moser
+  description: Manages installation and configuration of Zabbix Agent
+  company: Moser Systems
+  license: MIT
+  min_ansible_version: 1.4
+  platforms:
+  - name: EL
+    versions:
+    - 5
+    - 6
+  - name: Ubuntu
+    versions:
+    - saucy
+    - trusty
+  - name: Debian
+    versions:
+    - wheezy
+  categories:
+  - monitoring
+dependencies:
+  - { role: resmo.zabbix-common }

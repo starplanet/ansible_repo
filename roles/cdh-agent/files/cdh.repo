@@ -1,0 +1,5 @@
+[cdh]
+name=cdh repo
+baseurl=http://172.16.24.44/cloudera
+gpgcheck=0
+enabled=1

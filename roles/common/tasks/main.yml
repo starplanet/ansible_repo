@@ -3,27 +3,23 @@
 
 - name: install neccessary packages like net-tools, vim
   yum: name={{ item }} state=installed
-  become: yes
   with_items:
     - net-tools
     - vim
 
 - name: add group developer
   group: name=developer state=present
-  become: yes
 
 - name: add user zhangjinjie
-  become: yes
   user: name={{ item }} state=present groups=developer password={{ my_password }} update_password=always generate_ssh_key=yes
   with_items:
     - zhangjinjie
 
 - name: modify /etc/sudoers to add all privileges to developer group
   become: yes
-  lineinfile: dest=/etc/sudoers state=present regexp='^%developer' line='%developer ALL=(ALL) ALL'
+  lineinfile: dest=/etc/sudoers state=present regexp='^%developer' line='%developer ALL=(ALL) NOPASSWD{{':'}} ALL'
 
 - name: modify /etc/ssh/sshd_config to add zhangjinjie to AllowUsers section
-  become: yes
   lineinfile:
     dest: /etc/ssh/sshd_config
     state: present
@@ -34,10 +30,32 @@
     - zhangjinjie
   notify: restart sshd
 
+- name: add static vpn route
+  command: /usr/sbin/route add -net 10.8.0.0 netmask 255.255.255.0 gw 172.16.24.9
+  ignore_errors: True
+
+- name: add static vpn route to /etc/rc.local script
+  lineinfile:
+    dest: /etc/rc.local
+    state: present
+    regexp: '^route add -net 10\.8\.0\.0 netmask.*$'
+    line: 'route add -net 10.8.0.0 netmask 255.255.255.0 gw 172.16.24.9'
+
+- name: make /etc/rc.local start at boot
+  file: path=/etc/rc.d/rc.local mode=755
+
 - name: ensure ~/.pip directory exists
-  become: yes
   file: path=/home/zhangjinjie/.pip state=directory mode=0755 owner=zhangjinjie group=zhangjinjie
 
 - name: new ~/.pip/pip.conf to add aliyum mirror to pip
-  become: yes
   copy: src=pip.conf dest=/home/zhangjinjie/.pip/pip.conf owner=zhangjinjie mode=664 group=zhangjinjie
+
+- name: install iptables-services for centos 7
+  yum: name=iptables-services state=installed
+  when: ansible_distribution == "CentOS" and ansible_distribution_major_version == '7'
+
+- name: turn off iptables
+  service: name=iptables state=stopped 
+
+- name: clear iptables rules
+  command: /usr/sbin/iptables -F
