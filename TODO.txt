@@ -25,7 +25,11 @@ common tasks
 	b. sudo systemctl stop iptables
 	c. delete all existed iptables rules, otherwises existed iptables rules still be active.
 
-8. add ~/.oh-my-zsh/custom/robby-rushell.zsh-theme custom options.
+10. add ~/.oh-my-zsh/custom/robby-rushell.zsh-theme custom options.
+
+11. install epel-release repo
+	a. yum install epel-release
+	b. disable epel 
 
 developer environment
 =============================
@@ -45,6 +49,15 @@ developer environment
 	d. yum makecache
 
 4. install yum repository for nginx: http://nginx.org/packages/centos/7/$basearch/
+
+5. install gcc, gcc-c++
+
+6. install pyenv
+	a. curl -L https://raw.githubusercontent.com/yyuu/pyenv-installer/master/bin/pyenv-installer | bash
+	b. install python dependencies:yum install zlib-devel bzip2-devel openssl-devel ncurses-devel sqlite-devel readline-devel tk-devel gdbm-devel db4-devel libpcap-devel xz-devel
+	c. manually install Python-2.7.12.tar.xz, then move to ~/.pyenv/cache directory
+	d. pyenv install 2.7.12
+	e. run `pyenv global 2.7.12` to set global version to 2.7.12
 
 
 CDH
@@ -77,3 +90,4 @@ CDH
 	b. yum install cloudera-manager-agent
 	c. modify /etc/cloudera-scm-agent/config.ini to set listen_ip
 	d. start agent: service cloudera-scm-agent start
+12. create hive script path '/var/myshare/'

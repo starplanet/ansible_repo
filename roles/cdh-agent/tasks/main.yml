@@ -19,3 +19,9 @@
 - name: copy /etc/cloudera-scm-agent/config.ini
   template: src=config.ini.j2 dest=/etc/cloudera-scm-agent/config.ini force=yes backup=yes
   notify: restart cloudera-scm-agent
+
+- name: create hive share path
+  file: path=/var/myshare state=directory mode=0755
+
+- name: install mariadb to support sqoop direct mode
+  yum: name=mariadb state=installed
