@@ -1,0 +1,9 @@
+---
+
+ansible_ssh_user: "{{ vault_ansible_ssh_user }}"
+ansible_ssh_pass: "{{ vault_ansible_ssh_pass }}"
+ansible_ssh_extra_args: -o "StrictHostKeyChecking no"
+
+ansible_become_user: "{{ vault_ansible_become_user }}"
+ansible_become_pass: "{{ vault_ansible_become_pass }}"
+ansible_become_method: su

@@ -72,6 +72,17 @@ ym94 ansible_ssh_host=172.16.24.94
 
 [hadoop]
 ym44 ansible_ssh_host=172.16.24.44
+ym45 ansible_ssh_host=172.16.24.45
+ym82 ansible_ssh_host=172.16.24.82
+ym83 ansible_ssh_host=172.16.24.83
+ym84 ansible_ssh_host=172.16.24.84
+ym85 ansible_ssh_host=172.16.24.85
+ym86 ansible_ssh_host=172.16.24.86
+ym87 ansible_ssh_host=172.16.24.87
+ym88 ansible_ssh_host=172.16.24.88
+ym89 ansible_ssh_host=172.16.24.89
+ym90 ansible_ssh_host=172.16.24.90
+ym91 ansible_ssh_host=172.16.24.91
 ym92 ansible_ssh_host=172.16.24.92
 ym93 ansible_ssh_host=172.16.24.93
 ym94 ansible_ssh_host=172.16.24.94
