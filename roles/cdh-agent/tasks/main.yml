@@ -14,7 +14,7 @@
   with_items: '{{ ansible_all_ipv4_addresses }}'
   when: "item.startswith('172.16.24')"
 
-- debug: var='{{ host_ip }}'
+- debug: var=host_ip
 
 - name: copy /etc/cloudera-scm-agent/config.ini
   template: src=config.ini.j2 dest=/etc/cloudera-scm-agent/config.ini force=yes backup=yes

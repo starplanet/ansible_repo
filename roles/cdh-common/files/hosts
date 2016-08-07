@@ -1,6 +1,16 @@
 127.0.0.1   localhost localhost.localdomain localhost4 localhost4.localdomain4
 ::1         localhost localhost.localdomain localhost6 localhost6.localdomain6
 172.16.24.44    ym-044
+172.16.24.45	ym-045
+172.16.24.82	ym-082
+172.16.24.83	ym-083
+172.16.24.84	ym-084
+172.16.24.85	ym-085
+172.16.24.86	ym-086
+172.16.24.87	ym-087
+172.16.24.88	ym-088
+172.16.24.89	ym-089
+172.16.24.90	ym-090
 172.16.24.91	ym-091
 172.16.24.92    ym-092
 172.16.24.93	ym-093
