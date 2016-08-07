@@ -6,6 +6,7 @@
   with_items:
     - net-tools
     - vim
+    - git
 
 - name: add group developer
   group: name=developer state=present
@@ -44,11 +45,18 @@
 - name: make /etc/rc.local start at boot
   file: path=/etc/rc.d/rc.local mode=755
 
-- name: ensure ~/.pip directory exists
-  file: path=/home/zhangjinjie/.pip state=directory mode=0755 owner=zhangjinjie group=zhangjinjie
+- name: use aliyun yum repos
+  copy: 
+    src: '{{ ansible_distribution }}-{{ ansible_distribution_major_version }}.repo'
+    dest: /etc/yum.repos.d/{{ ansible_distribution }}-Base.repo
+    backup: yes
+    mode: 644
 
-- name: new ~/.pip/pip.conf to add aliyum mirror to pip
-  copy: src=pip.conf dest=/home/zhangjinjie/.pip/pip.conf owner=zhangjinjie mode=664 group=zhangjinjie
+- name: install epel-release repo
+  yum: name=epel-release state=installed
+
+- name: new /etc/pip.conf to add aliyum mirror to pip
+  copy: src=pip.conf dest=/etc/pip.conf mode=664
 
 - name: install iptables-services for centos 7
   yum: name=iptables-services state=installed
@@ -56,6 +64,8 @@
 
 - name: turn off iptables
   service: name=iptables state=stopped 
+  when: inventory_hostname not in skip_iptables_shutdown_servers
 
 - name: clear iptables rules
-  command: /usr/sbin/iptables -F
+  command: /sbin/iptables -F
+  when: inventory_hostname not in skip_iptables_shutdown_servers

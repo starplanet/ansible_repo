@@ -1,0 +1,116 @@
+---
+
+- name: install vbundle
+  git: 
+    repo: https://github.com/VundleVim/Vundle.vim.git
+    dest: /home/{{ item }}/.vim/bundle/Vundle.vim
+    update: no
+  with_items: '{{ user_list }}'
+
+- name: chown vbundle
+  file: 
+    path: /home/{{ item }}/.vim/bundle
+    state: directory
+    recurse: yes
+    owner: '{{ item }}'
+    group: '{{ item }}'
+  with_items: '{{ user_list }}'
+
+- name: copy vimrc
+  copy: src=vimrc dest=/home/{{ item }}/.vimrc owner={{ item }} group={{ item }}
+  with_items: '{{ user_list }}'
+
+- name: install zsh
+  yum: name=zsh state=installed
+
+- name: change to zsh
+  shell: chsh -s /bin/zsh {{ item }}
+  with_items: '{{ user_list }}'
+
+- name: install oh-my-zsh
+  shell: export HOME=/home/{{ item }}&&sh -c "$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
+  args: 
+    chdir: /home/{{ item }}
+    creates: /home/{{ item }}/.oh-my-zsh
+  with_items: '{{ user_list }}'
+
+- name: make sure oh-my-zsh custom diretory exist
+  file: path=/home/{{ item }}/.oh-my-zsh/custom state=directory
+  with_items: '{{ user_list }}'
+
+- name: add oh-my-zsh custom options
+  copy: 
+    src: robbyrussell.zsh-theme 
+    dest: /home/{{ item }}/.oh-my-zsh/custom/robbyrussell.zsh-theme
+    mode: 0644
+  with_items: '{{ user_list }}'
+
+- name: chown oh-my-zsh
+  file:
+    path: /home/{{ item }}/.oh-my-zsh
+    state: directory
+    recurse: yes
+    owner: '{{ item }}'
+    group: '{{ item }}'
+  with_items: '{{ user_list }}'
+
+- name: install gcc, gcc-c++
+  yum: name={{ item }} state=installed
+  with_items:
+    - gcc
+    - gcc-c++
+
+- name: install pyenv
+  shell: export HOME=/home/{{ item }}&&curl -L https://raw.githubusercontent.com/yyuu/pyenv-installer/master/bin/pyenv-installer | bash
+  args:
+    chdir: /home/{{ item }}
+    creates: /home/{{ item }}/.pyenv
+  with_items: '{{ user_list }}'
+
+- name: add pyenv enviroment variables to .zshrc
+  blockinfile:
+    dest: /home/{{ item }}/.zshrc
+    block: |
+      export PATH="/home/{{ item }}/.pyenv/bin:$PATH"
+      eval "$(pyenv init -)"
+      eval "$(pyenv virtualenv-init -)"
+  with_items: '{{ user_list }}'
+
+- name: prepare libraries to install python 2.7
+  yum: name={{ item }} state=installed
+  with_items:
+    - zlib-devel
+    - bzip2-devel
+    - openssl-devel
+    - ncurses-devel
+    - sqlite-devel
+    - readline-devel
+    - tk-devel
+    - gdbm-devel
+    - db4-devel
+    - libpcap-devel
+    - xz-devel
+
+- name: make sure .pyenv/cache directory exists
+  file: path=/home/{{ item }}/.pyenv/cache state=directory owner={{ item }} group={{ item }}
+  with_items: '{{ user_list }}'
+
+- name: copy Python-2.7.12.tar.xz
+  copy: src=Python-2.7.12.tar.xz dest=/home/{{ item }}/.pyenv/cache/Python-2.7.12.tar.xz
+  with_items: '{{ user_list }}'
+
+- name: pyenv install 2.7.12
+  shell: export HOME=/home/{{ item }}&&/home/{{ item }}/.pyenv/bin/pyenv install 2.7.12
+  args:
+    chdir: /home/{{ item }}
+    creates: /home/{{ item }}/.pyenv/versions/2.7.12
+  with_items: '{{ user_list }}'
+
+- name: chown pyenv
+  file:
+    path: /home/{{ item }}/.pyenv
+    state: directory
+    recurse: yes
+    owner: '{{ item }}'
+    group: '{{ item }}'
+  with_items: '{{ user_list }}'

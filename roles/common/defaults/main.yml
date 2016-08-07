@@ -1,0 +1,8 @@
+---
+
+skip_iptables_shutdown_servers: 
+        - ym39
+        - ym34
+        - ym36
+        - ym37
+        - ym43

@@ -3,8 +3,9 @@ common tasks
 
 1. packages to installed
 
-  1. net-tools, contain route, ifconfig commands
-  2. vim
+  	1. net-tools: contain route, ifconfig commands
+  	2. vim
+	3. git
 
 2. add user: zhangjinjie, add group developer
 
@@ -16,37 +17,43 @@ common tasks
 
 6. add vpn route: route add -net 10.8.0.0 netmask 255.255.255.0 gw 172.16.24.9
 
-7. new ~/.pip/pip.conf to add aliyun mirror to pip
+7. change hostname. modify /etc/sysconfig/network and run hostname command.
 
-8. change hostname. modify /etc/sysconfig/network and run hostname command.
-
-9. turn off iptables
+8. turn off iptables
 	a. sudo yum install iptables-service
 	b. sudo systemctl stop iptables
 	c. delete all existed iptables rules, otherwises existed iptables rules still be active.
 
-10. add ~/.oh-my-zsh/custom/robby-rushell.zsh-theme custom options.
+9. use aliyum yum repos
+	a. backup /etc/yum.repos.d/CentOS-Base.repo
+    	b. download aliyum repo to overide /etc/yum.repos.d/CentOS-Base.repo:
+		sudo wget http://mirrors.aliyun.com/repo/Centos-7.repo -O /etc/yum.repos.d/CentOS-Base.repo
+	c. yum clean all
+	d. yum makecache
 
-11. install epel-release repo
+
+10. install epel-release repo
 	a. yum install epel-release
 	b. disable epel 
+
+11. new /etc/pip.conf to add aliyun mirror to pip
 
 developer environment
 =============================
 
 1. use vbundle to configure vim environment
 	a. install vbundle: git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim
-  b. use .vimrc to configure plugins
-  c. install plugins: vim +PluginInstall +qall
+  	b. use .vimrc to configure plugins
+  	c. install plugins: vim +PluginInstall +qall
 
-2. use oh-my-zsh
+2. install oh-my-zsh
+	a. sh -c "$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)".
+	b. add ~/.oh-my-zsh/custom/robbyrussell.zsh-theme custom options.
+	c. add environment variables to .zshrc
+		export PATH="/home/zhangjinjie/.pyenv/bin:$PATH"
+		eval "$(pyenv init -)"
+		eval "$(pyenv virtualenv-init -)"
 
-3. use aliyum yum repos
-	a. backup /etc/yum.repos.d/CentOS-Base.repo
-    b. download aliyum repo to overide /etc/yum.repos.d/CentOS-Base.repo:
-		sudo wget http://mirrors.aliyun.com/repo/Centos-7.repo -O /etc/yum.repos.d/CentOS-Base.repo
-	c. yum clean all
-	d. yum makecache
 
 4. install yum repository for nginx: http://nginx.org/packages/centos/7/$basearch/
 
