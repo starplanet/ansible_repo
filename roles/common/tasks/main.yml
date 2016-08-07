@@ -42,21 +42,33 @@
     regexp: '^route add -net 10\.8\.0\.0 netmask.*$'
     line: 'route add -net 10.8.0.0 netmask 255.255.255.0 gw 172.16.24.9'
 
+- name: change hostname
+  hostname: name={{ host_map[inventory_hostname] }}
+  when: inventory_hostname in host_map
+
 - name: make /etc/rc.local start at boot
-  file: path=/etc/rc.d/rc.local mode=755
+  file: path=/etc/rc.d/rc.local mode=0755
 
 - name: use aliyun yum repos
   copy: 
     src: '{{ ansible_distribution }}-{{ ansible_distribution_major_version }}.repo'
     dest: /etc/yum.repos.d/{{ ansible_distribution }}-Base.repo
     backup: yes
-    mode: 644
+    mode: 0644
 
 - name: install epel-release repo
   yum: name=epel-release state=installed
 
+- name: disable epel.repo default
+  ini_file:
+    dest: /etc/yum.repos.d/epel.repo
+    section: epel
+    option: enabled
+    value: 0
+    backup: yes
+
 - name: new /etc/pip.conf to add aliyum mirror to pip
-  copy: src=pip.conf dest=/etc/pip.conf mode=664
+  copy: src=pip.conf dest=/etc/pip.conf mode=0664
 
 - name: install iptables-services for centos 7
   yum: name=iptables-services state=installed

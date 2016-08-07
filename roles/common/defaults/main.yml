@@ -6,3 +6,31 @@ skip_iptables_shutdown_servers:
         - ym36
         - ym37
         - ym43
+
+host_map:
+  ym34: ym-034
+  ym35: ym-035
+  ym36: ym-036
+  ym37: ym-037
+  ym38: ym-038
+  ym39: ym-039
+  ym40: ym-040
+  ym41: ym-041
+  ym42: ym-042
+  ym43: ym-043
+  ym44: ym-044
+  ym45: ym-045
+  ym46: ym-046
+  ym82: ym-082
+  ym83: ym-083
+  ym84: ym-084
+  ym85: ym-085
+  ym86: ym-086
+  ym87: ym-087
+  ym88: ym-088
+  ym89: ym-089
+  ym90: ym-090
+  ym91: ym-091
+  ym92: ym-092
+  ym93: ym-093
+  ym94: ym-094

@@ -1,0 +1,4 @@
+process=`ps -ef|grep /opt/collectd/sbin/collectd|grep -v grep|grep -v sh`
+if [ x"$process" != x ]; then
+    echo "$process"|awk '{print $2}'|xargs -n 1 kill
+fi
