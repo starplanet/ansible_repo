@@ -3,7 +3,7 @@ ntp_pkg_state: 'installed'
 ntp_service_state: 'started'
 ntp_service_enabled: 'yes'
 
-ntp_config_server: [ 'cn.ntp.org.cn', '1.cn.pool.ntp.org', 'tw.ntp.org.cn' ]
+ntp_config_server: [ 'ntp-sz.chl.la', 'cn.ntp.org.cn', '1.cn.pool.ntp.org', 'tw.ntp.org.cn' ]
 ntp_config_restrict:
 - '-4 default kod notrap nomodify nopeer noquery'
 - '-6 default kod notrap nomodify nopeer noquery'
