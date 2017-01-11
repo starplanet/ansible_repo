@@ -78,6 +78,7 @@
 
 - name: prepare libraries to install python 2.7
   yum: name={{ item }} state=installed
+  when: ansible_distribution_major_version == "6"
   with_items:
     - zlib-devel
     - bzip2-devel
@@ -88,6 +89,21 @@
     - tk-devel
     - gdbm-devel
     - db4-devel
+    - libpcap-devel
+    - xz-devel
+
+- name: prepare libraries to install python 2.7
+  yum: name={{ item }} state=installed
+  when: ansible_distribution_major_version == "7"
+  with_items:
+    - zlib-devel
+    - bzip2-devel
+    - openssl-devel
+    - ncurses-devel
+    - sqlite-devel
+    - readline-devel
+    - tk-devel
+    - gdbm-devel
     - libpcap-devel
     - xz-devel
 

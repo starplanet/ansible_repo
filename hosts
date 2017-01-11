@@ -71,16 +71,23 @@ ym93 ansible_ssh_host=172.16.24.93
 ym94 ansible_ssh_host=172.16.24.94
 
 [hadoop]
+# ym35 ansible_ssh_host=172.16.24.6 ansible_ssh_port=65322
+# ym36 ansible_ssh_host=172.16.24.1 ansible_ssh_port=65322 # 磁盘满
+# ym37 ansible_ssh_host=172.16.24.5 ansible_ssh_port=65322
+# ym38 ansible_ssh_host=172.16.24.199 ansible_ssh_port=22051
+# ym41 ansible_ssh_host=172.16.24.7 ansible_ssh_port=22051
+# ym42 ansible_ssh_host=172.16.24.42 ansible_ssh_port=22051
+# ym43 ansible_ssh_host=172.16.24.43 ansible_ssh_port=22051
 ym44 ansible_ssh_host=172.16.24.44
 ym45 ansible_ssh_host=172.16.24.45
 ym82 ansible_ssh_host=172.16.24.82
 ym83 ansible_ssh_host=172.16.24.83
 ym84 ansible_ssh_host=172.16.24.84
-ym85 ansible_ssh_host=172.16.24.85
+ym85 ansible_ssh_host=172.16.24.85  # 没用到
 ym86 ansible_ssh_host=172.16.24.86
-ym87 ansible_ssh_host=172.16.24.87
-ym88 ansible_ssh_host=172.16.24.88
-ym89 ansible_ssh_host=172.16.24.89
+ym87 ansible_ssh_host=172.16.24.87  # 没用到
+ym88 ansible_ssh_host=172.16.24.88  # 没用到
+ym89 ansible_ssh_host=172.16.24.89  # 没用到
 ym90 ansible_ssh_host=172.16.24.90
 ym91 ansible_ssh_host=172.16.24.91
 ym92 ansible_ssh_host=172.16.24.92
